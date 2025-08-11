@@ -72,10 +72,21 @@
                   </li>
 
                   <li>
-                        Total Income: {{ expensesDetails.expenses.income || 0 }}
+                        Total Income:
+                        {{
+                              (
+                                    expensesDetails.expenses.income || 0
+                              ).toLocaleString()
+                        }}
                   </li>
-                  <li>Total Expenses: {{ expensesDetails.totalExpenses }}</li>
-                  <li>Current Balance: {{ expensesDetails.currentBalance }}</li>
+                  <li>
+                        Total Expenses:
+                        {{ expensesDetails.totalExpenses.toLocaleString() }}
+                  </li>
+                  <li>
+                        Current Balance:
+                        {{ expensesDetails.currentBalance.toLocaleString() }}
+                  </li>
                   <li>
                         Top Spending Category:
                         {{ expensesDetails.topSpendingCategory }}

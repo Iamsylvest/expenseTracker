@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import debounce from 'lodash/debounce';
+
 export const useDetailsStore = defineStore('expensesDetails', {
       state: () => ({
             expenses: { products: [] },
@@ -14,6 +16,7 @@ export const useDetailsStore = defineStore('expensesDetails', {
 
             currentPage: 1,
             lastPage: 1,
+            search: '',
       }),
 
       getters: {
@@ -161,56 +164,95 @@ export const useDetailsStore = defineStore('expensesDetails', {
                   }
             },
 
-            async fetchAllExpensesDetails() {
-                  if (this.fetchedAllExpenses) return;
+            // Method to update the search term and trigger a fetch
+            setSearch(value) {
+                  this.search = value; // Save the new search value into the store state
+                  this.currentPage = 1; // Reset to first page when searching (avoid being stuck on page 3 for a new search)
+                  this.fetchedAllExpenses = false; // Mark data as "not fetched yet" so fetchAllExpensesDetails() will run
+                  this.debounceFetch(); // Trigger a debounced fetch (waits 500ms before actually calling the API)
+            },
 
-                  this.loadingAllExpenses = true; // Show loading indicator
-                  this.errorAllExpenses = null; // Clear previous errors
+            // Debounced function: waits 500ms before running fetchAllExpensesDetails()
+            // This prevents calling the API too often when typing in search box
+            debounceFetch: _.debounce(function () {
+                  this.fetchAllExpensesDetails(); // After debounce delay, call API
+            }, 500), // Delay time: 500 milliseconds (0.5 seconds)
+
+            // Main function to get expenses data from the backend
+            async fetchAllExpensesDetails() {
+                  if (this.fetchedAllExpenses) return; // If data is already fetched for this page/search, skip request
+
+                  this.loadingAllExpenses = true; // Show loading indicator in UI
+                  this.errorAllExpenses = null; // Clear any previous error messages
 
                   try {
-                        // Make GET request to fetch all expenses details from the server
+                        // Call backend GET endpoint with pagination + search params
                         const response = await axios.get(
                               '/allExpensesDetailsJson',
-                              { params: { page: this.currentPage } }
+                              {
+                                    params: {
+                                          page: this.currentPage, // Page number to fetch
+                                          search: this.search || '', // Search term (empty string if null/undefined)
+                                    },
+                              }
                         );
-                        this.allExpenses = response.data.data || [];
-                        this.currentPage = response.data.current_page;
-                        this.lastPage = response.data.last_page;
 
-                        this.fetchedAllExpenses = true; // Mark that data has been fetched
+                        // Save returned data into store state
+                        this.allExpenses = response.data.data || []; // Array of expense records
+                        this.currentPage = response.data.current_page; // Update current page number from API response
+                        this.lastPage = response.data.last_page; // Save last page number from API (for pagination UI)
+
+                        this.fetchedAllExpenses = true; // Mark as fetched so we don't fetch again unless needed
                   } catch (error) {
-                        this.errorAllExpenses = error; // Store error if request fails
+                        this.errorAllExpenses = error; // Store error so UI can display a message
                   } finally {
-                        this.loadingAllExpenses = false; // Hide loading indicator whether success or failure
+                        this.loadingAllExpenses = false; // Always hide loading indicator (success or fail)
                   }
             },
 
             async deleteTransaction(transactionId) {
                   try {
-                    // Send DELETE request to your API with the transaction ID
-                    const response = await axios.delete(`/api/transactions/${transactionId}`);
-                    console.log('Transaction deleted:', response.data);
-                    this.fetchedAllExpenses = false; // allow data to refresh
-                    await this.fetchAllExpensesDetails(); // refresh data
-                    
-                    // Show success alert
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Deleted!',
-                      text: 'Transaction deleted successfully.',
-                      timer: 2000,
-                      showConfirmButton: false,
-                    });
+                        // Show success alert
+                        const result = await Swal.fire({
+                              title: 'Are you sure?',
+                              text: 'You wont be able to revert thiss!.',
+                              icon: 'warning',
+                              showCancelButton: 'true',
+                              showConfirmButton: 'd33',
+                              cancelButtonColor: '#3085d6',
+                              confirmButtonText: 'Yes, delete it!',
+                              cancelButtonText: 'Cancel',
+                        });
+                        if (result.isConfirmed) {
+                              // Send DELETE request to your API with the transaction ID
+                              const response = await axios.delete(
+                                    `/api/transactions/${transactionId}`
+                              );
+                              console.log(
+                                    'Transaction deleted:',
+                                    response.data
+                              );
+                              this.fetchedAllExpenses = false; // allow data to refresh
+                              await this.fetchAllExpensesDetails(); // refresh data
+
+                              Swal.fire({
+                                    title: 'Deleted!',
+                                    text: `${transactionId} Transaction deleted Successfully`,
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false,
+                              });
+                        }
                   } catch (error) {
-                    console.error('Failed to delete transaction', error);
-                    
-                    // Show error alert
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Oops...',
-                      text: 'Failed to delete transaction. Please try again.',
-                    });
+                        console.error('Failed to delete transaction', error);
+
+                        // Show error alert
+                        Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Failed to delete transaction. Please try again.',
+                        });
                   }
-                }
+            },
       },
 });

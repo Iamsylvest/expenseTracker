@@ -2,6 +2,8 @@
       import { useDetailsStore } from '@/stores/expensesDetailsStore';
       import { onMounted } from 'vue';
       import ProductDetailsModal from './ProductDetailsModal.vue';
+      import { watch } from 'vue';
+      import { storeToRefs } from 'pinia';
 
       const allExpensesDetails = useDetailsStore();
 
@@ -33,10 +35,16 @@
             }
       }
 
-
-
       onMounted(() => {
             allExpensesDetails.fetchAllExpensesDetails();
+      });
+
+      // Get a reactive reference to search in the store
+      const { search } = storeToRefs(allExpensesDetails);
+
+      // Watch for changes and call store’s setSearch (with debounce inside store)
+      watch(search, (value) => {
+            allExpensesDetails.setSearch(value);
       });
 </script>
 
@@ -44,6 +52,16 @@
       <div class="p-4 overflow-x-auto">
             <div class="flex items-center justify-center">
                   <h1 class="p-4 text-2xl font-semibold">All Transaction</h1>
+            </div>
+            <div class="relative flex items-end justify-end bottom-4">
+                  <!--Seach and fillters-->
+                  <input
+                        type="search"
+                        alt="search"
+                        class="rounded-lg"
+                        placeholder="Search.."
+                        v-model="search"
+                  />
             </div>
             <table class="w-full border-2 border-collapse border-black">
                   <thead>
@@ -68,7 +86,11 @@
                               >
                                     Product Details
                               </th>
-                              <th  class="px-4 py-2 text-center border border-black">Action</th>
+                              <th
+                                    class="px-4 py-2 text-center border border-black"
+                              >
+                                    Action
+                              </th>
                         </tr>
                   </thead>
                   <tbody>
@@ -78,13 +100,19 @@
                               ) in allExpensesDetails.allExpenses"
                               :key="index"
                         >
-                              <td class="px-4 py-2 text-center border border-black">
+                              <td
+                                    class="px-4 py-2 text-center border border-black"
+                              >
                                     {{ expenses.title }}
                               </td>
-                              <td class="px-4 py-2 text-center border border-black ">
-                                    {{ expenses.income }}
+                              <td
+                                    class="px-4 py-2 text-center border border-black"
+                              >
+                                    {{ expenses.income.toLocaleString() }}
                               </td>
-                              <td class="px-4 py-2 text-center border border-black ">
+                              <td
+                                    class="px-4 py-2 text-center border border-black"
+                              >
                                     {{
                                           expenses.date_of_transaction_calculation
                                                 ? new Date(
@@ -100,19 +128,29 @@
                                                 : 'No date'
                                     }}
                               </td>
-                              <td class="px-4 py-2 text-center border border-black ">
-
+                              <td
+                                    class="px-4 py-2 text-center border border-black"
+                              >
                                     <ProductDetailsModal :expenses="expenses" />
-
                               </td>
-                              <td class="px-4 py-2 text-center border border-black ">
-                               <button @click="allExpensesDetails.deleteTransaction(expenses.id)" class="p-1 px-4 text-white bg-red-500 rounded-lg">
-                                        Delete
-                               </button>
+                              <td
+                                    class="px-4 py-2 text-center border border-black"
+                              >
+                                    <button
+                                          @click="
+                                                allExpensesDetails.deleteTransaction(
+                                                      expenses.id
+                                                )
+                                          "
+                                          class="p-1 px-4 text-white bg-red-500 rounded-lg"
+                                    >
+                                          Delete
+                                    </button>
                               </td>
                         </tr>
                   </tbody>
             </table>
+
             <!-- Pagination controls -->
             <div class="flex justify-center mt-4 space-x-4">
                   <!-- Disable Previous button if on the first page -->

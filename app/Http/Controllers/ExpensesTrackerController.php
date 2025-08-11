@@ -41,22 +41,44 @@ class ExpensesTrackerController extends Controller
                        return redirect()->route('dashboard')->with('success', 'Expenses and products saved successfully!');
         }
 
-        public function getAllExpensesDetails()
+        public function getAllExpensesDetails(Request $request)
         {
-
+            // Number of records per page for pagination
             $perPage = 10;
-            
-            $userId = auth()->id(); // get the currentl authenticated users id
-            $allExpenses = ExpensesTracker::with('products')
-            ->where('user_id', $userId)  // filter by current user
-            ->orderBy('updated_at', 'desc') // sort by latest updated_at
-            ->paginate($perPage); // <-- laravel paginator
-
-            return response()->json($allExpenses);
-
+        
+            // Get the currently authenticated user's ID
+            $userId = auth()->id();
+        
+            // Start building the query: include related 'products' and filter by user ID
+            $query = ExpensesTracker::with('products')
+                ->where('user_id', $userId);
+        
+            // If the 'search' parameter is provided and not empty, apply filters
+            if ($request->filled('search')) {
+        
+                // Store the search term in a variable for reuse
+                $searchTerm = $request->search;
+        
+                // Add a grouped WHERE condition to the query
+                $query->where(function ($q) use ($searchTerm) {
+                    // Search in 'title' column (on expenses_tracker)
+                    $q->where('title', 'like', "%{$searchTerm}%")
+                    
+                      // OR search in related products table for product_name or category
+                      ->orWhereHas('products', function ($q2) use ($searchTerm) {
+                          $q2->where('product_name', 'like', "%{$searchTerm}%")
+                             ->orWhere('category', 'like', "%{$searchTerm}%");
+                      });
+                });
+            }
+        
+            // Order by the latest updated records and paginate results
+            return response()->json(
+                $query->orderBy('updated_at', 'desc')->paginate($perPage)
+            );
         }
    
-        public function getLatestExpensesDetailsJson()
+        public function getLatestExpensesDetailsJson(Request $request)
         {
         // Get all ExpensesTracker records updated within the last 24 hours
         $latestExpenses = ExpensesTracker::with('products')
