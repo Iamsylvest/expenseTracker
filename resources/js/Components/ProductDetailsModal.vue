@@ -65,29 +65,36 @@
                   class="relative w-full p-8 overflow-x-auto bg-white rounded-lg shadow-md max-w-7xl"
             >
                   <!-- Close button -->
+              <div class="flex items-end justify-end ">
                   <button
-                        class="absolute px-4 py-2 text-2xl rounded-lg top-2 right-2 hover:bg-gray-300"
+                        class="px-4 py-2 text-2xl rounded-full top-2 right-2 hover:bg-gray-300"
                         @click="showProductsModal"
                   >
                         x
                   </button>
-
-                  <h1 class="text-xl font-semibold">
-                        Details for: {{ expenses.title }}
+              </div>
+      
+             <div class="flex items-center justify-center mb-5">
+         
+                  <h1 class="text-2xl font-semibold">
+                        {{ expenses.title }}
                   </h1>
+            
+             </div>
+               
 
-                  <table class="w-full border-collapse border-black">
-                        <thead class="bg-gray-300">
-                              <th class="px-4 py-2 border border-black">
+                  <table class="w-full border-collapse border-none">
+                        <thead class="text-white bg-gray-500">
+                              <th class="px-4 py-2 border-0 ">
                                     Product
                               </th>
-                              <th class="px-4 py-2 border border-black">
+                              <th class="px-4 py-2 border-0 ">
                                     Unit
                               </th>
-                              <th class="px-4 py-2 border border-black">
+                              <th class="px-4 py-2 border-0 ">
                                     Price
                               </th>
-                              <th class="px-4 py-2 border border-black">
+                              <th class="px-4 py-2 border-0">
                                     Category
                               </th>
                         </thead>
@@ -97,17 +104,23 @@
                                           products, index
                                     ) in expenses.products"
                                     :key="index"
+
+                                    :class="{
+                                
+                                'bg-white hover:bg-gradient-to-r from-blue-300 to-blue-100  ': index % 2 === 0,
+                                'bg-gray-100 hover:bg-gradient-to-r from-blue-100 to-blue-300  ' : index % 2 === 1,
+                           }"
                               >
-                                    <td class="px-4 py-2 border border-black">
+                                    <td class="px-4 py-2 border-0 ">
                                           {{ products.product_name }}
                                     </td>
-                                    <td class="px-4 py-2 border border-black">
+                                    <td class="px-4 py-2 border-0 ">
                                           {{ products.unit }}
                                     </td>
-                                    <td class="px-4 py-2 border border-black">
+                                    <td class="px-4 py-2 border-0">
                                           {{ products.price.toLocaleString() }}
                                     </td>
-                                    <td class="px-4 py-2 border border-black">
+                                    <td class="px-4 py-2 border-0">
                                           {{ products.category }}
                                           <i
                                                 :class="

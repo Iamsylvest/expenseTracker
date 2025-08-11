@@ -49,7 +49,7 @@
                   <h1 class="p-4 text-2xl font-semibold">Final Summary</h1>
             </div>
             <ul
-                  class="grid p-4 px-12 font-medium text-center border-b-2 border-black lg:grid-cols-6"
+                  class="grid p-4 px-12 font-medium text-center border-b-2 border-gray-200 lg:grid-cols-6"
             >
                   <li>
                         Title of Expenses:

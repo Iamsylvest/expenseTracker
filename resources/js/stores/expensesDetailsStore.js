@@ -101,10 +101,11 @@ export const useDetailsStore = defineStore('expensesDetails', {
 
                                     // Set a semi-transparent teal color for the chart bars.
                                     backgroundColor: [
-                                          'rgba(255, 99, 132, 0.5)',
-                                          'rgba(54, 162, 235, 0.5)',
-                                          'rgba(255, 206, 86, 0.5)',
-                                          'rgba(75, 192, 192, 0.5)',
+                                          '#fa0000',
+                                          '#147bfa',
+                                          '#38a100',
+                                          '#c9c600',
+                                          
                                     ],
                               },
                         ],
@@ -132,10 +133,10 @@ export const useDetailsStore = defineStore('expensesDetails', {
                                     ),
 
                                     backgroundColor: [
-                                          'rgba(255, 99, 132, 0.5)',
-                                          'rgba(54, 162, 235, 0.5)',
-                                          'rgba(255, 206, 86, 0.5)',
-                                          'rgba(75, 192, 192, 0.5)',
+                                          '#147bfa',
+                                          '#147bfa',
+                                          '#1ea7ff',
+                                          '#1ea7ff',
                                     ],
                               },
                         ],

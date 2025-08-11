@@ -53,41 +53,58 @@
             <div class="flex items-center justify-center">
                   <h1 class="p-4 text-2xl font-semibold">All Transaction</h1>
             </div>
-            <div class="relative flex items-end justify-end bottom-4">
+            <div class="relative flex items-center justify-center rounded-md sm:items-end sm:justify-end bottom-4 bg ">
                   <!--Seach and fillters-->
-                  <input
-                        type="search"
-                        alt="search"
-                        class="rounded-lg"
-                        placeholder="Search.."
-                        v-model="search"
-                  />
+                  <div class="flex justify-center">
+                        <div class="flex overflow-hidden border border-gray-300 rounded-full shadow-md">
+                        <input
+                              type="search border"
+                              placeholder="Search"
+                              v-model="search"
+                              class="px-4 py-2 w-96 focus:outline-none"
+                        />
+                        <button
+                              type="submit"
+                              class="flex items-center justify-center px-4 transition bg-gray-100 hover:bg-gray-200"
+                              aria-label="Search"
+                        >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-gray-600">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13z" />
+                              </svg>
+                        </button>
+                        </div>
+                        </div>
+            
+
             </div>
-            <table class="w-full border-2 border-collapse border-black">
+            <table 
+          
+            
+            class="w-full border-collapse shadow-md ">
                   <thead>
-                        <tr class="bg-gray-200">
+                        <tr class="text-white bg-gray-500 ">
                               <th
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     Title
                               </th>
                               <th
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     Income
                               </th>
                               <th
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     Date of transaction
                               </th>
                               <th
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     Product Details
                               </th>
                               <th
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     Action
                               </th>
@@ -99,19 +116,24 @@
                                     expenses, index
                               ) in allExpensesDetails.allExpenses"
                               :key="index"
+                              :class="{
+                                
+                                   'bg-white hover:bg-gradient-to-r from-blue-300 to-blue-100  ': index % 2 === 0,
+                                   'bg-gray-100 hover:bg-gradient-to-r from-blue-100 to-blue-300  ' : index % 2 === 1,
+                              }"
                         >
                               <td
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     {{ expenses.title }}
                               </td>
                               <td
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     {{ expenses.income.toLocaleString() }}
                               </td>
                               <td
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     {{
                                           expenses.date_of_transaction_calculation
@@ -129,12 +151,12 @@
                                     }}
                               </td>
                               <td
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     <ProductDetailsModal :expenses="expenses" />
                               </td>
                               <td
-                                    class="px-4 py-2 text-center border border-black"
+                                    class="px-4 py-2 text-center border-0 border-black"
                               >
                                     <button
                                           @click="

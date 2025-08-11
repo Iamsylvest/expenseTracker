@@ -13,7 +13,7 @@
       <Head title="Welcome" />
 
       <div class="w-full p-3 bg-white shadow-sm ">
-            <p class="ml-0 text-sm font-semibold text-center sm:text-left lg:text-xl text-nowrap sm:ml-12">💰 ExpenseTracker</p>
+            <p class="ml-0 text-sm font-semibold text-center sm:text-left lg:text-xl text-nowrap sm:ml-12 text-custom-lightblue">💰 ExpenseTracker</p>
       </div>
       <div
             class="flex items-center justify-center min-h-screen bg-gray-100 selection:bg-custom-lightblue selection:text-white"
