@@ -1,3 +1,3 @@
 <template>
-      <h1 class="text-[30px] text-black ">💰 ExpenseTracker</h1>
+      <h1 class="text-lg text-black text-md sm:text-left lg:text-2xl text-nowrap ">💰 ExpenseTracker</h1>
 </template>
