@@ -29,16 +29,17 @@
       <GuestLayout>
             <Head title="Log in" />
 
+
             <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
                   {{ status }}
             </div>
 
             <form @submit.prevent="submit">
-                  <div>
+                  <div >
                         <InputLabel
                               for="email"
                               value="Email"
-                              class="font-semibold text-white"
+                              class="font-semibold "
                         />
 
                         <TextInput
@@ -58,7 +59,7 @@
                         <InputLabel
                               for="password"
                               value="Password"
-                              class="font-semibold text-white"
+                              class="font-semibold"
                         />
 
                         <TextInput
@@ -82,7 +83,7 @@
                                     name="remember"
                                     v-model:checked="form.remember"
                               />
-                              <span class="ml-2 text-sm text-white"
+                              <span class="ml-2 text-sm "
                                     >Remember me</span
                               >
                         </label>
@@ -92,7 +93,7 @@
                         <Link
                               v-if="canResetPassword"
                               :href="route('password.request')"
-                              class="text-sm text-white rounded-md hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              class="text-smrounded-md hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                               Forgot your password?
                         </Link>

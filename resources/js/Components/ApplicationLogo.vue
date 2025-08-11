@@ -1,3 +1,3 @@
 <template>
-      <h1>LOGO</h1>
+      <h1 class="text-[30px] text-black ">💰 ExpenseTracker</h1>
 </template>

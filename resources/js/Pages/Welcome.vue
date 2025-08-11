@@ -12,40 +12,28 @@
 <template>
       <Head title="Welcome" />
 
-      <div
-            class="absolute w-full p-3 rounded-b-lg shadow-sm bg-custom-darkblue"
-      >
-            <p class="ml-12 text-2xl font-semibold text-white">Logo</p>
+      <div class="w-full p-3 bg-white shadow-sm ">
+            <p class="ml-0 text-sm font-semibold text-center sm:text-left lg:text-xl text-nowrap sm:ml-12">💰 ExpenseTracker</p>
       </div>
       <div
-            class="flex items-center justify-center min-h-screen bg-white selection:bg-custom-lightblue selection:text-white"
+            class="flex items-center justify-center min-h-screen bg-gray-100 selection:bg-custom-lightblue selection:text-white"
       >
             <!-- Grid Layout: Responsive 1-column on mobile, 2-column on sm+ -->
-            <div
-                  class="relative grid grid-cols-1 gap-8 p-6 sm:grid-cols-2 sm:p-12 place-items-center"
-            >
-                  <!-- 🖼️ Left Side: Landing Image -->
-                  <div>
-                        <img
-                              src="/build/assets/img/landing_Image.jpg"
-                              alt="Landing Image"
-                              class="h-[300px] w-[300px] sm:h-[650px] sm:w-[700px] object-cover rounded-xl border-4 border-white shadow-lg"
-                        />
-                  </div>
-
+            <div class="w-full max-w-3xl bg-white rounded-lg shadow-md">
                   <!-- 🧾 Right Side: Welcome Message & Buttons -->
                   <div>
-                        <div class="p-4 space-y-6 text-center">
-                              <!-- 🧠 Headline -->
-                              <p
-                                    class="text-2xl font-bold text-gray-800 sm:text-5xl"
-                              >
-                                    "Welcome! Ready to track your expenses?
-                                    You're in the right place."
-                              </p>
+                        <div
+                              class="grid gap-4 p-4 space-y-6 text-center sm:grid-cols-2"
+                        >
+                              <div>
+                                    <img
+                                          src="/build/assets/img/landingPageBg.jpg"
+                                          alt="landingPage" class="rounded-lg"
+                                    />
+                              </div>
 
                               <!-- 🔐 Conditional Links Based on Auth -->
-                              <div v-if="canLogin" class="mt-8">
+                              <div v-if="canLogin" class="mt-8 ">
                                     <!-- ✅ If user is already logged in -->
                                     <Link
                                           v-if="$page.props.auth.user"
@@ -57,13 +45,26 @@
 
                                     <!-- ❌ If NOT logged in -->
                                     <template v-else>
-                                          <div
-                                                class="flex flex-col items-center space-y-4"
-                                          >
+                                                      <div
+                                                            class="flex flex-col items-center space-y-4"
+                                                      >
+                                                      <div class="mb-4 space-y-2">
+                                                      <!-- 🧠 Headline -->
+                                                      <h1 class="text-3xl">
+                                                            Track Your Money. Grow Your
+                                                            Savings.
+                                                      </h1>
+                                                      <h2 class="px-12 text-center ">
+                                                            See where your money goes,
+                                                            control your spending, and reach
+                                                            your financial goals — all in
+                                                            one place.
+                                                      </h2>
+                                                </div>
                                                 <!-- 🔵 Log in Button -->
                                                 <Link
                                                       :href="route('login')"
-                                                      class="px-8 py-2 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                                      class="w-full px-8 py-2 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                                 >
                                                       Log in
                                                 </Link>
@@ -72,7 +73,7 @@
                                                 <Link
                                                       v-if="canRegister"
                                                       :href="route('register')"
-                                                      class="px-8 py-2 text-lg font-semibold text-blue-600 bg-white border border-blue-600 rounded-lg shadow hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                                      class="w-full px-8 py-2 text-lg font-semibold text-blue-600 bg-white border border-blue-600 rounded-lg shadow hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                                 >
                                                       Register
                                                 </Link>

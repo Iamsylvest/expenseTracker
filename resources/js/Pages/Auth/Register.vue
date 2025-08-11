@@ -31,7 +31,7 @@
                         <InputLabel
                               for="name"
                               value="Name"
-                              class="font-bold text-white"
+                              class="font-bold "
                         />
 
                         <TextInput
@@ -51,7 +51,7 @@
                         <InputLabel
                               for="email"
                               value="Email"
-                              class="font-bold text-white"
+                              class="font-bold"
                         />
 
                         <TextInput
@@ -70,7 +70,7 @@
                         <InputLabel
                               for="password"
                               value="Password"
-                              class="font-bold text-white"
+                              class="font-bold "
                         />
 
                         <TextInput
@@ -92,7 +92,7 @@
                         <InputLabel
                               for="password_confirmation"
                               value="Confirm Password"
-                              class="font-bold text-white"
+                              class="font-bold "
                         />
 
                         <TextInput
@@ -113,7 +113,7 @@
                   <div class="flex items-center justify-end mt-4">
                         <Link
                               :href="route('login')"
-                              class="text-sm text-white rounded-md hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              class="text-sm rounded-md hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                               Already registered?
                         </Link>
