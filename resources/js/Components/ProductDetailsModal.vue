@@ -92,6 +92,9 @@
                                     Unit
                               </th>
                               <th class="px-4 py-2 border-0 ">
+                                    Quantity
+                              </th>
+                              <th class="px-4 py-2 border-0 ">
                                     Price
                               </th>
                               <th class="px-4 py-2 border-0">
@@ -116,6 +119,9 @@
                                     </td>
                                     <td class="px-4 py-2 border-0 ">
                                           {{ products.unit }}
+                                    </td>
+                                    <td class="px-4 py-2 border-0 ">
+                                          {{ products.quantity }}
                                     </td>
                                     <td class="px-4 py-2 border-0">
                                           {{ products.price.toLocaleString() }}
