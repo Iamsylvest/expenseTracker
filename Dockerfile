@@ -11,7 +11,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    && docker-php-ext-install pdo pdo_pgsql
+    libzip-dev \
+    libxml2-dev \
+    libpng-dev \
+    libonig-dev \
+    && docker-php-ext-install pdo pdo_pgsql mbstring zip exif pcntl bcmath gd
 
 # Enable Apache rewrite module
 RUN a2enmod rewrite
